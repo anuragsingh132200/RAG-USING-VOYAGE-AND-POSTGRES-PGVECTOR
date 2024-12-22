@@ -5,7 +5,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from app.config import Config
 from scipy.spatial.distance import cosine
-from voyage_ai import VoyageClient  # Import Voyage AI Client
+from voyageai import VoyageClient   # Import Voyage AI Client
 
 # Initialize the Voyage AI client (with your API key)
 client = VoyageClient(api_key=Config.VOYAGE_AI_API_KEY)

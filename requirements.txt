@@ -1,1 +1,7 @@
-Flask
+flask
+pdfplumber
+markdown
+psycopg2-binary
+numpy
+sentence-transformers
+voyageai
