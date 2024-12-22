@@ -62,11 +62,10 @@ The system is a Retrieval-Augmented Generation (RAG) chatbot designed to ingest,
      ```
 
 5. **Configure Environment Variables**:
-   Create a `.env` file with the following:
+   Edit the `config.py` file with the following:
    ```env
-   FLASK_ENV=development
    SQLALCHEMY_DATABASE_URI=postgresql://<username>:<password>@localhost:5432/rag_db
-   VOYAGE_API_KEY=<your_voyage_api_key>
+   VOYAGE_AI_API_KEY=<your_voyage_api_key>
    ```
 
 6. **Run the Application**:
