@@ -1,4 +1,3 @@
 class Config:
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:password@localhost/rag_db'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    VOYAGE_AI_API_KEY = 'pa-bsurn9m6_F9dC9TUtBz-53bRKUeH7u4l24IPNsi4s0E'  # Set your Voyage AI API key here
+    SQLALCHEMY_DATABASE_URI='postgresql://<username>:<password>@localhost:5432/rag_db'
+    VOYAGE_AI_API_KEY='<your_voyage_api_key>'
