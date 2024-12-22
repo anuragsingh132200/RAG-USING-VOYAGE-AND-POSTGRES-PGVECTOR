@@ -5,7 +5,10 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from app.config import Config
 from scipy.spatial.distance import cosine
+from voyage_ai import VoyageClient  # Import Voyage AI Client
 
+# Initialize the Voyage AI client (with your API key)
+client = VoyageClient(api_key=Config.VOYAGE_AI_API_KEY)
 # Initialize Sentence-Transformer model
 model = SentenceTransformer('all-MiniLM-L6-v2')  # Pre-trained model to generate embeddings
 
@@ -118,3 +121,21 @@ def query_documents(query_text, top_k=5):
     # Sort chunks by similarity in descending order and return the top_k results
     relevant_chunks = sorted(relevant_chunks, key=lambda x: x['similarity'], reverse=True)
     return relevant_chunks[:top_k]
+
+# Function to generate a response using Voyage AI's LLM
+def generate_llm_response(query_text, relevant_docs):
+    try:
+        # Format the context for the LLM
+        context = "\n\n".join([f"Title: {doc['title']}\nContent: {doc['content']}" for doc in relevant_docs])
+
+        # Prepare the prompt with the query and the relevant documents
+        prompt = f"Query: {query_text}\n\nContext:\n{context}\n\nAnswer:"
+
+        # Send the prompt to Voyage AI's LLM for generating a response
+        response = client.complete(prompt)
+
+        return response['text'].strip()  # Return the response text from LLM
+
+    except Exception as e:
+        print(f"Error generating response: {str(e)}")
+        return "Sorry, I couldn't generate an answer at the moment."

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.utils import ingest_document,query_documents
+from app.utils import ingest_document, query_documents
 
 main_bp = Blueprint('main', __name__)
 
@@ -20,10 +20,17 @@ def ingest():
 @main_bp.route('/query', methods=['POST'])
 def query():
     query_text = request.form.get('query', '')
-    if query_text is None:
+    if query_text is None or query_text == '':
         return jsonify({"error": "Query text is required"}), 400
 
-    # Get relevant documents based on query
-    relevant_docs = query_documents(query_text)
-    print(relevant_docs)
-    return jsonify({"results": relevant_docs}), 200
+    try:
+        # Get relevant documents based on query
+        relevant_docs = query_documents(query_text)
+
+        if relevant_docs:
+            return jsonify({"results": relevant_docs}), 200
+        else:
+            return jsonify({"message": "No relevant documents found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
